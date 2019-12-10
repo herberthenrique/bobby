@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/herberthenrique/boilerplate_gin/config"
-	"github.com/herberthenrique/boilerplate_gin/models"
-	"github.com/herberthenrique/boilerplate_gin/routes"
+	"github.com/herberthenrique/bobby/config"
+	"github.com/herberthenrique/bobby/models"
+	"github.com/herberthenrique/bobby/routes"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )

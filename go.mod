@@ -1,4 +1,4 @@
-module github.com/herberthenrique/boilerplate_gin
+module github.com/herberthenrique/bobby
 
 go 1.13
 

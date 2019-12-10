@@ -10,9 +10,7 @@ func SetupRouter() *gin.Engine {
 
 	v1 := r.Group("v1")
 
-	namespace := v1.Group("partners-admission")
-
-	SetupTodoRouter(namespace)
+	SetupTodoRouter(v1)
 
 	return r
 }
