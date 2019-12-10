@@ -9,12 +9,18 @@ import (
 )
 
 //TodoController Main controller of Todo resource
-type TodoController struct{}
+type TodoController struct {
+	repository repository.TodoRepository
+}
+
+func (con TodoController) init() {
+	con.repository = repository.TodoRepository{}
+}
 
 //Show - List all todos
 func (con TodoController) Show(c *gin.Context) {
 	var todo []models.Todo
-	err := repository.GetAllTodos(&todo)
+	err := con.repository.List(&todo)
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
@@ -26,7 +32,7 @@ func (con TodoController) Show(c *gin.Context) {
 func (con TodoController) Create(c *gin.Context) {
 	var todo models.Todo
 	c.BindJSON(&todo)
-	err := repository.CreateATodo(&todo)
+	err := con.repository.Create(&todo)
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
@@ -38,7 +44,7 @@ func (con TodoController) Create(c *gin.Context) {
 func (con TodoController) Get(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var todo models.Todo
-	err := repository.GetATodo(&todo, id)
+	err := con.repository.Get(&todo, id)
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
@@ -50,12 +56,12 @@ func (con TodoController) Get(c *gin.Context) {
 func (con TodoController) Update(c *gin.Context) {
 	var todo models.Todo
 	id := c.Params.ByName("id")
-	err := repository.GetATodo(&todo, id)
+	err := con.repository.Get(&todo, id)
 	if err != nil {
 		c.JSON(http.StatusNotFound, todo)
 	}
 	c.BindJSON(&todo)
-	err = repository.UpdateATodo(&todo, id)
+	err = con.repository.Update(&todo, id)
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
@@ -67,7 +73,7 @@ func (con TodoController) Update(c *gin.Context) {
 func (con TodoController) Delete(c *gin.Context) {
 	var todo models.Todo
 	id := c.Params.ByName("id")
-	err := repository.DeleteATodo(&todo, id)
+	err := con.repository.Delete(&todo, id)
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
